@@ -1,0 +1,5 @@
+package com.shopnest.userservice;
+
+public class AuthControllerTest {
+
+}
