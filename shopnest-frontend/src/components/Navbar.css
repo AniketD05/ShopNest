@@ -1,76 +1,67 @@
-.navbar {
+.custom-navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 40px;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  justify-content: space-between;
+  padding: 20px 120px;
+  gap: 10px;
+  min-height: 85px;
 }
 
-/* Left Section */
-.navbar-left {
+/* All nav items */
+.nav-item {
   display: flex;
-  flex-direction: column;
+  align-items: center; 
+}
+
+/* Logo */
+.logo-item {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1976d2;
   cursor: pointer;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: 700;
+/* Location */
+.location-box {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+}
+
+.location-label {
+  font-size: 11px;
+  color: #888;
+}
+
+.location-city {
+  font-size: 15px;
+  font-weight: 600;
   color: #1976d2;
 }
 
-.location {
-  font-size: 13px;
-  color: #555;
+/* Search */
+.search-item {
+  flex: 0 0 30%;
 }
 
-/* Center Search */
-.navbar-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.search-bar {
-  width: 60%;
-  padding: 10px 15px;
+.search-item input {
+  padding: 10px 16px;
   border-radius: 25px;
-  border: 1px solid #ddd;
-  outline: none;
-  transition: 0.3s;
-}
-
-.search-bar:focus {
-  border-color: #1976d2;
-  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
-}
-
-/* Right Section */
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.welcome-text {
   font-size: 14px;
-  color: #333;
 }
 
-.logout-btn {
-  padding: 6px 14px;
-  border-radius: 6px;
-  border: none;
-  background: #1976d2;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
+/* Welcome text */
+.welcome-item {
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.logout-btn:hover {
-  background: #1565c0;
+/* Improve spacing between independent items */
+.custom-navbar > .nav-item {
+  margin-right: 30px;
 }
+
+.custom-navbar > .nav-item:last-child {
+  margin-right: 0;
+}
+

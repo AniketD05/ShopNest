@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { Spinner, Navbar, Container, Form, Button } from "react-bootstrap";
+import { Spinner, Navbar, Container, Form, Button, Badge } from "react-bootstrap";
+import { FaShoppingCart } from "react-icons/fa";
+import "./Navbar.css";
 
 function AppNavbar() {
-
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -21,6 +22,26 @@ function AppNavbar() {
     localStorage.removeItem("token");
     navigate("/");
   };
+
+  const placeholders = [
+  "Search for products...",
+  "Search for mobiles...",
+  "Search for groceries...",
+  "Search for laptops...",
+  "Search for fashion..."
+];
+
+const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setPlaceholderIndex((prevIndex) =>
+      prevIndex === placeholders.length - 1 ? 0 : prevIndex + 1
+    );
+  }, 2500); // change every 2.5 seconds
+
+  return () => clearInterval(interval);
+}, []);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -51,42 +72,70 @@ function AppNavbar() {
   }, []);
 
   return (
-    <Navbar bg="light" expand="lg" className="shadow-sm px-4">
+    <Navbar bg="light" className="shadow-sm">
+      <Container fluid className="custom-navbar">
 
-      <Container fluid>
-
-        {/* Left Section */}
-        <Navbar.Brand
-          onClick={() => navigate("/home")}
-          style={{ cursor: "pointer", fontWeight: "bold" }}
-        >
+        {/* Logo */}
+        <div className="nav-item logo-item" onClick={() => navigate("/home")}>
           ShopNest
-        </Navbar.Brand>
-
-        {/* Location beside logo */}
-        <div style={{ marginLeft: "15px", fontSize: "14px" }}>
-          📍 Delivering to{" "}
-          {loadingLocation ? (
-            <Spinner animation="border" size="sm" />
-          ) : (
-            locationName
-          )}
         </div>
 
-        {/* Center Search */}
-        <Form className="d-flex mx-auto" style={{ width: "40%" }}>
+        {/* Location */}
+        <div className="nav-item location-box">
+          <div className="location-label">Delivering to</div>
+          <div className="location-city">
+            📍{" "}
+            {loadingLocation ? (
+              <Spinner animation="border" size="sm" />
+            ) : (
+              locationName
+            )}
+          </div>
+        </div>
+
+        {/* Search */}
+        <div className="nav-item search-item">
           <Form.Control
             type="search"
-            placeholder="Search for products..."
-            className="me-2"
+             placeholder={placeholders[placeholderIndex]}
           />
-        </Form>
+        </div>
 
-        {/* Right Section */}
+        {/* Cart */}
+        <div className="nav-item">
+          <Button
+            variant="outline-primary"
+            className="d-flex align-items-center gap-2 position-relative"
+            onClick={() => navigate("/cart")}
+          >
+            <FaShoppingCart size={18} />
+            My Cart
+            <Badge
+              bg="danger"
+              pill
+              className="position-absolute"
+              style={{ top: "-6px", right: "-8px", fontSize: "9px" }}
+            >
+              0
+            </Badge>
+          </Button>
+        </div>
+
+        {/* Welcome */}
         {token && (
-          <div className="d-flex align-items-center gap-3">
-            <span>Hello, {username}</span>
-            <Button variant="outline-primary" size="sm" onClick={handleLogout}>
+          <div className="nav-item welcome-item">
+            Hello, {username}
+          </div>
+        )}
+
+        {/* Logout */}
+        {token && (
+          <div className="nav-item">
+            <Button
+              variant="outline-primary"
+              size="sm"
+              onClick={handleLogout}
+            >
               Logout
             </Button>
           </div>
