@@ -4,13 +4,14 @@ import authService from "../../services/authService";
 import "./SignUp.css";
 
 function SignUp() {
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    password: ""
+    mobile: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const [error, setError] = useState("");
@@ -20,7 +21,7 @@ function SignUp() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -30,6 +31,20 @@ function SignUp() {
     setError("");
     setSuccess("");
 
+    // Password match validation
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    // Mobile validation (basic 10 digit check)
+    if (!/^[0-9]{10}$/.test(formData.mobile)) {
+      setError("Enter valid 10-digit mobile number");
+      setLoading(false);
+      return;
+    }
+
     try {
       await authService.register(formData);
 
@@ -38,7 +53,6 @@ function SignUp() {
       setTimeout(() => {
         navigate("/");
       }, 1500);
-
     } catch (err) {
       setError(err.response?.data || "Registration failed");
     }
@@ -46,15 +60,17 @@ function SignUp() {
     setLoading(false);
   };
 
+  const passwordsMatch =
+    formData.confirmPassword.length > 0 &&
+    formData.password === formData.confirmPassword;
+
   return (
     <div className="signup-container">
       <div className="signup-card">
-
         <h2>Create Account</h2>
         <p className="subtitle">Join ShopNest today</p>
 
         <form onSubmit={handleSubmit}>
-
           <input
             type="text"
             name="username"
@@ -74,6 +90,15 @@ function SignUp() {
           />
 
           <input
+            type="tel"
+            name="mobile"
+            placeholder="Mobile Number"
+            value={formData.mobile}
+            onChange={handleChange}
+            required
+          />
+
+          <input
             type="password"
             name="password"
             placeholder="Password"
@@ -82,19 +107,40 @@ function SignUp() {
             required
           />
 
+          <div className="confirm-password-group">
+            {formData.confirmPassword.length > 0 && (
+              <p
+                className={
+                  passwordsMatch
+                    ? "password-match success"
+                    : "password-match error"
+                }
+              >
+                {passwordsMatch ? "Passwords matched" : "Passwords do not match"}
+              </p>
+            )}
+
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           <button type="submit" disabled={loading}>
             {loading ? "Creating Account..." : "Sign Up"}
           </button>
 
           {error && <p className="error">{error}</p>}
           {success && <p className="success">{success}</p>}
-
         </form>
 
         <p className="login-link">
           Already have an account? <Link to="/">Login</Link>
         </p>
-
       </div>
     </div>
   );

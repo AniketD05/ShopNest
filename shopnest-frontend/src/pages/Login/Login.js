@@ -35,7 +35,7 @@ function Login() {
       navigate("/home");
 
     } catch (err) {
-      setError("Invalid credentials");
+      setError("Invalid Username or Password!");
     }
 
     setLoading(false);

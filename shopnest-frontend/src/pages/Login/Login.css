@@ -1,82 +1,115 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
 }
 
+/* ===== Light Background ===== */
 .login-container {
   height: 100vh;
-  background: linear-gradient(135deg, #1f1f1f, #3f3f3f);
+  background: linear-gradient(135deg, #e3f2fd, #f8fbff);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* ===== Clean Card ===== */
 .login-card {
   background: white;
   padding: 40px;
-  width: 350px;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  width: 380px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .login-card h2 {
   margin-bottom: 5px;
+  color: #333;
 }
 
 .subtitle {
   font-size: 14px;
-  color: gray;
-  margin-bottom: 20px;
+  color: #777;
+  margin-bottom: 25px;
 }
 
-.login-card input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  transition: 0.3s;
-}
-
-.login-card input:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
+/* ===== Form ===== */
 .login-card form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 18px;
 }
 
-.login-card button {
-  width: 100%;
+/* ===== Inputs ===== */
+.login-card input {
   padding: 12px;
-  margin-top: 10px;
-  background: #007bff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.login-card input:focus {
+  border-color: #1976d2;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15);
+}
+
+/* ===== Button ===== */
+.login-card button {
+  padding: 12px;
+  background: #1976d2;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
   transition: 0.3s;
 }
 
 .login-card button:hover {
-  background: #0056b3;
+  background: #1565c0;
 }
 
 .login-card button:disabled {
-  background: gray;
+  background: #90caf9;
   cursor: not-allowed;
 }
 
+/* ===== Messages ===== */
 .error {
-  color: red;
-  margin-top: 10px;
+  color: #d32f2f;
+  font-size: 14px;
 }
 
+/* ===== Link ===== */
 .register-link {
-  margin-top: 15px;
+  margin-top: 18px;
   font-size: 14px;
+}
+
+.register-link a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Animation ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
