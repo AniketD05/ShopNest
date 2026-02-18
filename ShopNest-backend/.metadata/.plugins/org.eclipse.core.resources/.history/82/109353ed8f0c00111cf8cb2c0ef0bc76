@@ -1,0 +1,5 @@
+package com.shopnest.userservice.config;
+
+public class CorsConfig {
+
+}
